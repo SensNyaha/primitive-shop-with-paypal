@@ -4,3 +4,19 @@
     flex-direction: column;
     justify-content: space-between;
 }
+.rating span {
+    margin: 0px 3px;
+}
+h3 {
+    padding: 12px 0;
+}
+.btn-w-hover:hover {
+    &:hover {
+        background-color: #90c5f0d3 !important;
+        color: white;
+    }
+}
+.btn-w-hover:disabled {
+    background-color: #a0a0a060 !important;
+    color: #0000007a !important;
+}
