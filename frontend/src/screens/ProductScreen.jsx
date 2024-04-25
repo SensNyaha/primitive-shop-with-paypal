@@ -1,17 +1,31 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
-import Rating from "../components/Rating";
-import products from "../products";
 
-function ProductScreen({ match }) {
+import { Row, Col, Image, ListGroup, Button } from "react-bootstrap";
+
+import Rating from "../components/Rating";
+import axios from "axios";
+import SpinnerWrapper from "../components/SpinnerWrapper";
+
+function ProductScreen() {
     const { id } = useParams();
-    const product = products.find((p) => p._id === id);
+
+    const [product, setProduct] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get("/api/products/" + id).then(({ data }) => {
+            setProduct(data[0]);
+            setIsLoading(false);
+        });
+    }, [id]);
 
     return (
         <>
             <Link className="btn btn-dark my-3 btn-w-hover" to="/">
                 Go Back
             </Link>
+            <SpinnerWrapper isLoading={isLoading} />
             <Row>
                 <Col sm={12} md={6} lg={9}>
                     <Image

@@ -1,7 +1,10 @@
 import express from "express";
+import * as dotenv from "dotenv";
 import cors from "cors";
 
 import products from "./data/products.js";
+
+dotenv.config();
 
 const app = express();
 
@@ -15,4 +18,6 @@ app.get("/api/products/:_id?", (req, res) => {
     else res.json(products);
 });
 
-app.listen(3001, () => console.log("server started"));
+app.listen(process.env.PORT || 3001, () =>
+    console.log(`${process.env.NODE_ENV} mode of server`)
+);

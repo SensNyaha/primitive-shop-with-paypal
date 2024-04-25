@@ -1,6 +1,4 @@
-import PropTypes from "prop-types";
-
-function Rating({ value, text, color }) {
+function Rating({ value = 0, text = "grey", color }) {
     return (
         <div className="rating">
             {new Array(Math.floor(value)).fill("").map((_, i) => (
@@ -21,15 +19,5 @@ function Rating({ value, text, color }) {
         </div>
     );
 }
-
-Rating.defaultProps = {
-    color: "grey",
-};
-
-Rating.propTypes = {
-    value: PropTypes.number.isRequired,
-    text: PropTypes.string.isRequired,
-    color: PropTypes.string,
-};
 
 export default Rating;
