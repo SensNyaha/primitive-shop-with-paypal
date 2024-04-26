@@ -1,7 +1,7 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import cors from "cors";
-import chalk from "chalk";
+
 import chalk from "chalk";
 
 import connectDB from "./config/connectDB.js";
@@ -31,14 +31,6 @@ app.get("/api/products/:_id?", async (req, res) => {
     }
 });
 
-connectDB().then(
-    app.listen(process.env.PORT || 3001, () =>
-        console.log(
-            chalk.black.italic.bgCyanBright.bold(
-                `${process.env.NODE_ENV} mode of server`
-            )
-        )
-    )
 connectDB().then(
     app.listen(process.env.PORT || 3001, () =>
         console.log(
