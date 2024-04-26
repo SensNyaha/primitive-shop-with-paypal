@@ -5,8 +5,7 @@ import cors from "cors";
 import chalk from "chalk";
 
 import connectDB from "./config/connectDB.js";
-import User from "./models/User.js";
-import Product from "./models/Product.js";
+import productRouter from "./routes/productRouter.js";
 
 dotenv.config();
 
@@ -18,18 +17,7 @@ app.get("/", async (req, res) => {
     res.send("");
 });
 
-app.get("/api/products/:_id?", async (req, res) => {
-    try {
-        const products = await Product.find({});
-        if (req.params._id)
-            res.json(products.filter((p) => p._id == req.params._id));
-        else {
-            res.json(products);
-        }
-    } catch (e) {
-        res.status(500).json({ success: false, status: 500, error: e.message });
-    }
-});
+app.use("/api/products", productRouter);
 
 connectDB().then(
     app.listen(process.env.PORT || 3001, () =>

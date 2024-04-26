@@ -15,7 +15,7 @@ function ProductScreen() {
 
     useEffect(() => {
         axios.get("/api/products/" + id).then(({ data }) => {
-            setProduct(data[0]);
+            setProduct(data);
             setIsLoading(false);
         });
     }, [id]);

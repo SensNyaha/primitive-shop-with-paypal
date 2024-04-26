@@ -1,3 +1,4 @@
+import { hash } from "bcrypt";
 import mongoose, { SchemaTypes, Schema } from "mongoose";
 
 const userSchema = Schema(
@@ -37,6 +38,13 @@ const userSchema = Schema(
     },
     { timestamps: true }
 );
+
+userSchema.pre("save", async function (next) {
+    const hashedPassword = await hash(this.password, 10);
+    this.password = hashedPassword;
+
+    next();
+});
 
 function validateUserEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
