@@ -6,6 +6,7 @@ import chalk from "chalk";
 
 import connectDB from "./config/connectDB.js";
 import productRouter from "./routes/productRouter.js";
+import { errorsMw, notFoundMw } from "./middlewares/errorMws.js";
 
 dotenv.config();
 
@@ -18,6 +19,9 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/api/products", productRouter);
+
+app.use(notFoundMw);
+app.use(errorsMw);
 
 connectDB().then(
     app.listen(process.env.PORT || 3001, () =>
