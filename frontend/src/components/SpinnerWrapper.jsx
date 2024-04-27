@@ -1,7 +1,7 @@
 import { Spinner } from "react-bootstrap";
 import { Transition } from "react-transition-group";
 
-function SpinnerWrapper({ isLoading }) {
+function SpinnerWrapper({ isLoading, className }) {
     const transitionStyles = {
         entering: { opacity: 1, zIndex: 9999 },
         entered: { opacity: 1, zIndex: 9999 },
@@ -12,7 +12,7 @@ function SpinnerWrapper({ isLoading }) {
         <Transition in={isLoading} timeout={1000}>
             {(state) => (
                 <div
-                    className="spinner-wrapper"
+                    className={className}
                     style={{ ...transitionStyles[state] }}
                 >
                     <Spinner />

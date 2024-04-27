@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     try {
         const products = await Product.find({});
-        if (products) res.json(products);
+        if (products) res.json(products.map((e) => e._id));
         else throw new Error("Couldn't get products list");
     } catch (e) {
         res.status(500).json({ success: false, code: 500, error: e.message });

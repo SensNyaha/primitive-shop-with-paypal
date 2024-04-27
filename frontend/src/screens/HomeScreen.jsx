@@ -1,42 +1,48 @@
 import { useEffect, useState } from "react";
-
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Col, Row } from "react-bootstrap";
 
 import Product from "../components/Product";
 import SpinnerWrapper from "../components/SpinnerWrapper";
+import { getProductsIDs } from "../redux/slices/productsSlice";
 
 function HomeScreen() {
-    const [products, setProducts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const { productIDs, loadingIDs, error } = useSelector(
+        (state) => state.products
+    );
+    const dispatch = useDispatch();
+
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        axios
-            .get("/api/products")
-            .then(({ data }) => {
-                setProducts(data);
-                setIsLoading(false);
-            })
-            .catch(() => setIsLoading(false));
-    }, []);
+        setIsLoading(loadingIDs?.includes("all"));
+    }, [loadingIDs]);
+
+    useEffect(() => {
+        dispatch(getProductsIDs());
+    }, [dispatch]);
 
     return (
         <>
             <h1>Latest Products</h1>
-            <SpinnerWrapper isLoading={isLoading} />
-            {!!products.length && (
+            <SpinnerWrapper
+                isLoading={isLoading}
+                className={"spinner-wrapper"}
+            />
+            {!!productIDs.length && (
                 <Row>
-                    {products.map((p) => (
-                        <Col key={p._id} sm={12} md={6} lg={4} xl={3}>
-                            <Product product={p} />
+                    {productIDs.map((pID) => (
+                        <Col key={pID} sm={12} md={6} lg={4} xl={3}>
+                            <Product _id={pID} />
                         </Col>
                     ))}
                 </Row>
             )}
-            {!products.length && !isLoading && (
+            {!productIDs.length && !isLoading && (
                 <h3 className="text-center mt-5">
-                    Sorry, we couldn't get all products list
+                    Sorry, we couldn't get all products list <br />
+                    {error}
                 </h3>
             )}
         </>
