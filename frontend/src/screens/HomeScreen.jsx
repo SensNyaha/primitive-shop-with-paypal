@@ -12,23 +12,33 @@ function HomeScreen() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get("/api/products").then(({ data }) => {
-            setProducts(data);
-            setIsLoading(false);
-        });
+        axios
+            .get("/api/products")
+            .then(({ data }) => {
+                setProducts(data);
+                setIsLoading(false);
+            })
+            .catch(() => setIsLoading(false));
     }, []);
 
     return (
         <>
             <h1>Latest Products</h1>
             <SpinnerWrapper isLoading={isLoading} />
-            <Row>
-                {products.map((p) => (
-                    <Col key={p._id} sm={12} md={6} lg={4} xl={3}>
-                        <Product product={p} />
-                    </Col>
-                ))}
-            </Row>
+            {!!products.length && (
+                <Row>
+                    {products.map((p) => (
+                        <Col key={p._id} sm={12} md={6} lg={4} xl={3}>
+                            <Product product={p} />
+                        </Col>
+                    ))}
+                </Row>
+            )}
+            {!products.length && !isLoading && (
+                <h3 className="text-center mt-5">
+                    Sorry, we couldn't get all products list
+                </h3>
+            )}
         </>
     );
 }

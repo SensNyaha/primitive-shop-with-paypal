@@ -78,9 +78,9 @@ function ProductScreen() {
                 </Row>
             )}
             {!product && !isLoading && (
-                <h1 className="text-center">
+                <h3 className="text-center">
                     Sorry, we've not found that product
-                </h1>
+                </h3>
             )}
         </>
     );
