@@ -8,7 +8,7 @@ export const cartSlice = createSlice({
     reducers: {
         changeProductQuantity: (state, { payload }) => {
             payload.forEach((plElem) => {
-                if (plElem._id) {
+                if (plElem._id && plElem.quantity > 0) {
                     const foundIndex = state.findIndex(
                         (e) => e._id === plElem._id
                     );

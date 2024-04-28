@@ -10,6 +10,7 @@ import ProductScreen from "./screens/ProductScreen";
 
 import { useDispatch } from "react-redux";
 import { changeProductQuantity } from "./redux/slices/cartSlice";
+import CartScreen from "./screens/CartScreen";
 
 function App() {
     const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
                             path="/product/:id"
                             element={<ProductScreen />}
                         />
+                        <Route path="/cart" element={<CartScreen />} />
                     </Routes>
                 </Container>
             </main>
