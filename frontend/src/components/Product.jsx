@@ -14,7 +14,7 @@ function Product({ _id: pID }) {
     const dispatch = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isImageLoaded, setIsImageLoaded] = useState(false);
+    const [isImageLoaded, setIsImageLoaded] = useState(null);
     const [product, setProduct] = useState(false);
 
     useEffect(() => {
@@ -46,7 +46,7 @@ function Product({ _id: pID }) {
                 }}
             >
                 <SpinnerWrapper
-                    isLoading={!isImageLoaded || isLoading}
+                    isLoading={isImageLoaded === false || isLoading}
                     className="spinner-wrapper__card"
                 />
             </div>

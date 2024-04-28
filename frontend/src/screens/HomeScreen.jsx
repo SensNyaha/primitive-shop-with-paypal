@@ -6,6 +6,7 @@ import { Col, Row } from "react-bootstrap";
 import Product from "../components/Product";
 import SpinnerWrapper from "../components/SpinnerWrapper";
 import { getProductsIDs } from "../redux/slices/productsSlice";
+import Message from "../components/Message";
 
 function HomeScreen() {
     const { productIDs, loadingIDs, error } = useSelector(
@@ -40,10 +41,10 @@ function HomeScreen() {
                 </Row>
             )}
             {!productIDs.length && !isLoading && (
-                <h3 className="text-center mt-5">
+                <Message variant="danger">
                     Sorry, we couldn't get all products list <br />
                     {error}
-                </h3>
+                </Message>
             )}
         </>
     );

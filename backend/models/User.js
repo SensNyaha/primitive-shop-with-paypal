@@ -35,6 +35,12 @@ const userSchema = Schema(
             type: Boolean,
             default: false,
         },
+        cart: [
+            {
+                quantity: Number,
+                id: String,
+            },
+        ],
     },
     { timestamps: true }
 );
