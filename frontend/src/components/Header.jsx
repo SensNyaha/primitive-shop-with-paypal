@@ -1,9 +1,10 @@
-import React from "react";
+import { useSelector } from "react-redux";
 
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 function Header() {
+    const cart = useSelector((state) => state.cart);
     return (
         <header>
             <Navbar expand="lg" collapseOnSelect className="bg-body-tertiary">
@@ -16,9 +17,14 @@ function Header() {
                         <Nav className="ms-auto">
                             <LinkContainer to="/cart">
                                 <Nav.Link
-                                    className="ms-auto"
-                                    style={{ padding: "2px 5px 0 0" }}
+                                    className="ms-auto position-relative"
+                                    style={{ position: "relative" }}
                                 >
+                                    {cart && cart.length > 0 && (
+                                        <span className="cart__count">
+                                            {cart.length}
+                                        </span>
+                                    )}
                                     <i className="fas fa-shopping-cart" />
                                     &nbsp;Cart
                                 </Nav.Link>

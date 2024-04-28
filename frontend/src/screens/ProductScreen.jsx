@@ -34,6 +34,11 @@ function ProductScreen() {
     const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
+        const found = cart.find((e) => e._id === product._id);
+        if (found) setQuantity(found.quantity);
+    }, [cart, product._id]);
+
+    useEffect(() => {
         setIsLoading(loadingIDs?.includes(id));
     }, [loadingIDs, id]);
 
@@ -59,19 +64,38 @@ function ProductScreen() {
     function handleDecreaseQuantity() {
         if (quantity > 1) setQuantity((qnt) => qnt - 1);
         else setQuantity(1);
+
+        if (cart.find((e) => e._id === product._id))
+            dispatch(
+                changeProductQuantity([
+                    { _id: product?._id, quantity: quantity - 1 },
+                ])
+            );
     }
     function handleIncreaseQuantity() {
         if (quantity < product.countInStock) setQuantity((qnt) => qnt + 1);
         else setQuantity(product.countInStock);
+
+        if (cart.find((e) => e._id === product._id))
+            dispatch(
+                changeProductQuantity([
+                    { _id: product?._id, quantity: quantity + 1 },
+                ])
+            );
     }
     function handleChangeQuantityInCart(e) {
-        if (e.target.innerText.toLowerCase().includes("remove"))
+        if (cart.find((e) => e._id === product._id))
             dispatch(removeProduct({ _id: product?._id }));
         else dispatch(changeProductQuantity([{ _id: product?._id, quantity }]));
     }
-    useEffect(() => {
-        dispatch(changeProductQuantity([{ _id: product?._id, quantity }]));
-    }, [quantity, dispatch, product]);
+    function handleMouseEnterAddToCartButton(e) {
+        if (cart.find((e) => e._id === product._id))
+            e.target.innerText = "Remove";
+    }
+    function handleMouseOutAddToCartButton(e) {
+        if (cart.find((e) => e._id === product._id))
+            e.target.innerText = "Added";
+    }
 
     return (
         <>
@@ -84,14 +108,14 @@ function ProductScreen() {
             />
             {product && (
                 <Row>
-                    <Col sm={12} md={6} lg={9}>
+                    <Col sm={12} md={6} lg={8}>
                         <Image
                             src={product.image}
                             alt={product.name}
                             width="100%"
                         />
                     </Col>
-                    <Col sm={12} md={6} lg={3}>
+                    <Col sm={12} md={6} lg={4}>
                         <ListGroup variant="flush">
                             <ListGroup.Item>
                                 <h2>{product.name}</h2>
@@ -119,7 +143,7 @@ function ProductScreen() {
                             </ListGroup.Item>
                             <ListGroup.Item
                                 sm={12}
-                                className="d-flex align-items-center justify-content-end gap-2"
+                                className="d-flex align-items-center justify-content-end gap-4 flex-wrap"
                             >
                                 {product.countInStock > 0 && (
                                     <QuantityControl
@@ -134,9 +158,13 @@ function ProductScreen() {
                                     type="button"
                                     disabled={product.countInStock <= 0}
                                     onClick={handleChangeQuantityInCart}
+                                    onMouseEnter={
+                                        handleMouseEnterAddToCartButton
+                                    }
+                                    onMouseOut={handleMouseOutAddToCartButton}
                                 >
                                     {cart.find((pr) => pr._id === product._id)
-                                        ? "Remove from cart"
+                                        ? "Added"
                                         : "Add to cart"}
                                 </Button>
                             </ListGroup.Item>
