@@ -17,15 +17,13 @@ export const cartSlice = createSlice({
                     else state.push(plElem);
                 }
             });
-            // return state.map((e) => {
-            //     if (e._id === payload._id) {
-            //         e.quantity = payload.quantity;
-            //     }
-            //     return e;
-            // });
+
+            localStorage.setItem("cart", JSON.stringify(state));
         },
         removeProduct: (state, { payload }) => {
-            return state.filter((e) => e._id !== payload._id);
+            const newState = state.filter((e) => e._id !== payload._id);
+            localStorage.setItem("cart", JSON.stringify(newState));
+            return newState;
         },
     },
 });
