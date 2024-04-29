@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Message from "../components/Message";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import CartItem from "../components/CartItem";
+import { useNavigate } from "react-router-dom";
 
 function CartScreen() {
     const cart = useSelector((state) => state.cart);
     const [cartItems, setCartItems] = useState([]);
+
+    const navi = useNavigate();
 
     useEffect(() => {
         setCartItems(
@@ -24,10 +27,55 @@ function CartScreen() {
         });
     }, [cart]);
 
+    function checkoutHandler() {
+        navi("/login?redirect=shipping");
+    }
+
     return (
         <Row>
-            <Col md={8}>
-                <h1>Shopping Cart</h1>
+            <h1>Shopping Cart</h1>{" "}
+            <Col md={12}>
+                <Row
+                    style={{ border: "1px solid #fff" }}
+                    className="align-items-center p-3"
+                >
+                    <Col sm={9}>
+                        <h4 style={{ marginBottom: 0 }}>
+                            Subtotal of{" "}
+                            {cart?.reduce(
+                                (prev, cur) => (prev += cur.quantity),
+                                0
+                            )}{" "}
+                            items :{" "}
+                            <span style={{ fontWeight: 700 }}>
+                                $
+                                {cart
+                                    ?.reduce(
+                                        (prev, cur) =>
+                                            (prev +=
+                                                cur.quantity *
+                                                    cartItems.find(
+                                                        (e) => e._id === cur._id
+                                                    )?.price || 0),
+                                        0
+                                    )
+                                    .toFixed(2)}
+                            </span>
+                        </h4>
+                    </Col>{" "}
+                    <Col sm={3}>
+                        <Button
+                            type="button"
+                            className="d-block btn-w-hover ms-auto"
+                            disabled={cart.length === 0}
+                            onClick={checkoutHandler}
+                        >
+                            Proceed to Checkout
+                        </Button>
+                    </Col>
+                </Row>
+            </Col>
+            <Col md={12}>
                 {cart.length === 0 && (
                     <Message variant="info">
                         Your cart is empty! <Link to="/">Go Back shopping</Link>
@@ -52,22 +100,6 @@ function CartScreen() {
                         })}
                     </ListGroup>
                 )}
-            </Col>
-            <Col md={4}>
-                <Card style={{ border: "1px solid #fff" }}>
-                    <ListGroup variant="flush">
-                        <ListGroup.Item>
-                            <h3 className="text-end">
-                                Subtotal of{" "}
-                                {cart?.reduce(
-                                    (prev, cur) => (prev += cur.quantity),
-                                    0
-                                )}{" "}
-                                items
-                            </h3>
-                        </ListGroup.Item>
-                    </ListGroup>
-                </Card>
             </Col>
         </Row>
     );

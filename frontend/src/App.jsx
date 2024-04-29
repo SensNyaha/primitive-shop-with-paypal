@@ -24,8 +24,8 @@ function App() {
     return (
         <>
             <Header />
-            <main className="py-3 mb-auto">
-                <Container>
+            <main className="py-3 mb-auto" style={{ flexGrow: 1 }}>
+                <Container style={{ height: "100%" }}>
                     <Routes>
                         <Route path="/" element={<HomeScreen />} />
                         <Route

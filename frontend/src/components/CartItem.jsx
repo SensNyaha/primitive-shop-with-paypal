@@ -36,15 +36,18 @@ function CartItem({ product, quantity }) {
     }
 
     return (
-        <Row>
+        <Row
+            className="align-items-center p-2"
+            style={{ borderBottom: "1px solid white" }}
+        >
             <Col md={2}>
                 <Image src={product.image} alt={product.name} fluid rounded />
             </Col>
-            <Col md={4}>
+            <Col md={6}>
                 <Link to={`/product/${product._id}`}>{product.name}</Link>
             </Col>
-            <Col md={2}>${product.price}</Col>
-            <Col md={3}>
+            <Col md={1}>${product.price}</Col>
+            <Col md={2}>
                 <QuantityControl
                     maxCount={product.countInStock}
                     quantity={quantity}
