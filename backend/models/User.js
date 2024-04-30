@@ -46,6 +46,8 @@ const userSchema = Schema(
 );
 
 userSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) return next();
+
     const hashedPassword = await hash(this.password, 10);
     this.password = hashedPassword;
 

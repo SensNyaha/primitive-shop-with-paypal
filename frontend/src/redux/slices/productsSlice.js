@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const getProductsIDs = createAsyncThunk("products", async () => {
-    const { data } = await axios.get("/api/products");
+    const { data } = await axios.get("/api/products/");
     return data;
 });
 
