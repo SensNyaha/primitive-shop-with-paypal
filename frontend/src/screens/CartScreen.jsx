@@ -37,7 +37,7 @@ function CartScreen() {
             <Col md={12}>
                 <Row
                     style={{ border: "1px solid #fff" }}
-                    className="align-items-center p-3"
+                    className="align-items-center p-3 mb-2"
                 >
                     <Col sm={9}>
                         <h4 style={{ marginBottom: 0 }}>

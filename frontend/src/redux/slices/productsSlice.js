@@ -8,13 +8,13 @@ const initialState = {
     error: null,
 };
 
-export const getProductsIDs = createAsyncThunk("/products", async () => {
+export const getProductsIDs = createAsyncThunk("products", async () => {
     const { data } = await axios.get("/api/products");
     return data;
 });
 
 export const getProductsInfoById = createAsyncThunk(
-    "/products/:id",
+    "products/:id",
     async (id) => {
         if (!id) throw new Error("No id defined for product info request");
         const { data } = await axios.get("/api/products/" + id);
