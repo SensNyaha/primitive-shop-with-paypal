@@ -27,6 +27,7 @@ export const authSlice = createSlice({
         },
         logoutUser: (state) => {
             state.userInfo = null;
+            localStorage.removeItem("userInfo");
         },
     },
 });
@@ -43,8 +44,10 @@ fetchLogin = createAsyncThunk(
 
         console.log(data);
 
-        if (data) dispatch(authSlice.actions.loginUserSuccess(data));
-        else dispatch(authSlice.actions.loginUserFail(data.message));
+        if (data) {
+            dispatch(authSlice.actions.loginUserSuccess(data));
+            localStorage.setItem("userInfo", JSON.stringify(data));
+        } else dispatch(authSlice.actions.loginUserFail(data.message));
     }
 );
 

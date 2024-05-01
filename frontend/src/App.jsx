@@ -11,6 +11,7 @@ import ProductScreen from "./screens/ProductScreen";
 import { useDispatch } from "react-redux";
 import { changeProductQuantity } from "./redux/slices/cartSlice";
 import CartScreen from "./screens/CartScreen";
+import { loginUserSuccess } from "./redux/slices/authSlice";
 
 function App() {
     const dispatch = useDispatch();
@@ -19,6 +20,10 @@ function App() {
         const cartFromLocal = localStorage.getItem("cart");
         if (cartFromLocal)
             dispatch(changeProductQuantity(JSON.parse(cartFromLocal)));
+
+        const userFromLocal = localStorage.getItem("userInfo");
+        if (userFromLocal)
+            dispatch(loginUserSuccess(JSON.parse(userFromLocal)));
     }, [dispatch]);
 
     return (
