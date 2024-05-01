@@ -7,6 +7,7 @@ import Product from "../components/Product";
 import SpinnerWrapper from "../components/SpinnerWrapper";
 import { getProductsIDs } from "../redux/slices/productsSlice";
 import Message from "../components/Message";
+import { fetchLogin } from "../redux/slices/authSlice";
 
 function HomeScreen() {
     const { productIDs, loadingIDs, error } = useSelector(
@@ -15,6 +16,7 @@ function HomeScreen() {
     const dispatch = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
+    const [fetchedOnce, setFetchedOnce] = useState(false);
 
     useEffect(() => {
         setIsLoading(loadingIDs?.includes("all"));
@@ -22,6 +24,20 @@ function HomeScreen() {
 
     useEffect(() => {
         dispatch(getProductsIDs());
+        setFetchedOnce(true);
+    }, [dispatch]);
+
+    useEffect(() => {
+        setTimeout(
+            () =>
+                dispatch(
+                    fetchLogin({
+                        email: "mihanmakarov@mail.ru",
+                        password: "Zoom98",
+                    })
+                ),
+            10000
+        );
     }, [dispatch]);
 
     return (
@@ -40,7 +56,7 @@ function HomeScreen() {
                     ))}
                 </Row>
             )}
-            {!productIDs.length && !isLoading && (
+            {!productIDs.length && !isLoading && fetchedOnce && (
                 <Message variant="danger">
                     Sorry, we couldn't get all products list <br />
                     {error}

@@ -1,5 +1,5 @@
-export const notFoundMw = (_, res, next) => {
-    const notFoundError = new Error("Not Found page");
+export const notFoundMw = (req, res, next) => {
+    const notFoundError = new Error("Not Found page: " + req.url);
     res.status(404);
     next(notFoundError);
 };
