@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
+import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Message from "../components/Message";
 import { Link } from "react-router-dom";
@@ -34,12 +34,12 @@ function CartScreen() {
     return (
         <Row>
             <h1>Shopping Cart</h1>{" "}
-            <Col md={12}>
+            <Col xs={12}>
                 <Row
                     style={{ border: "1px solid #fff" }}
                     className="align-items-center p-3 mb-2"
                 >
-                    <Col sm={9}>
+                    <Col xs={9}>
                         <h4 style={{ marginBottom: 0 }}>
                             Subtotal of{" "}
                             {cart?.reduce(
@@ -75,7 +75,7 @@ function CartScreen() {
                     </Col>
                 </Row>
             </Col>
-            <Col md={12}>
+            <Col xs={12}>
                 {cart.length === 0 && (
                     <Message variant="info">
                         Your cart is empty! <Link to="/">Go Back shopping</Link>

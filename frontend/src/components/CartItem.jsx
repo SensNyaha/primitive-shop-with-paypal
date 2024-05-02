@@ -40,14 +40,16 @@ function CartItem({ product, quantity }) {
             className="align-items-center p-2"
             style={{ borderBottom: "1px solid white" }}
         >
-            <Col md={2}>
+            <Col xs={5} sm={2}>
                 <Image src={product.image} alt={product.name} fluid rounded />
             </Col>
-            <Col md={6}>
+            <Col xs={12} sm={5} md={6}>
                 <Link to={`/product/${product._id}`}>{product.name}</Link>
             </Col>
-            <Col md={1}>${product.price}</Col>
-            <Col md={2}>
+            <Col xs={5} sm={2} md={1}>
+                ${product.price}
+            </Col>
+            <Col xs={5} sm={2}>
                 <QuantityControl
                     maxCount={product.countInStock}
                     quantity={quantity}
@@ -55,7 +57,7 @@ function CartItem({ product, quantity }) {
                     onIncrease={handleIncreaseQuantity}
                 />
             </Col>
-            <Col md={1}>
+            <Col xs={1}>
                 <Button
                     size="sm"
                     className="btn-w-hover"

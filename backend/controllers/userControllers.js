@@ -70,22 +70,27 @@ export const registerUser = asyncHandler(async (req, res) => {
             message: "User with the same email already exists",
         });
 
-    const newUser = await new User({ name, email, password }).save();
-    {
-        const { _id, email, name, isAdmin } = newUser;
-        if (newUser) {
-            return res.status(201).json({
-                _id,
-                email,
-                name,
-                isAdmin,
-                token: generateJSONtoken(_id),
-            });
-        } else
-            return res.status(500).json({
-                success: false,
-                code: 500,
-                message: "Cannot save new user. Please try again later",
-            });
+    try {
+        const newUser = await new User({ name, email, password }).save();
+        {
+            const { _id, email, name, isAdmin } = newUser;
+            if (newUser) {
+                return res.status(201).json({
+                    _id,
+                    email,
+                    name,
+                    isAdmin,
+                    token: generateJSONtoken(_id),
+                });
+            }
+        }
+    } catch (e) {
+        return res.status(500).json({
+            success: false,
+            code: 500,
+            message:
+                "Cannot save new user. Please try again later in case of: " +
+                e.message,
+        });
     }
 });

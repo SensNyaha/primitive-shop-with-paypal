@@ -6,6 +6,7 @@ import chalk from "chalk";
 
 import connectDB from "./config/connectDB.js";
 import productRouter from "./routes/productRouter.js";
+import cartRouter from "./routes/cartRouter.js";
 import userRouter from "./routes/userRouter.js";
 import { errorsMw, notFoundMw } from "./middlewares/errorMws.js";
 
@@ -23,6 +24,7 @@ app.get("/", async (req, res) => {
 
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
+app.use("/api/cart", cartRouter);
 
 app.use(notFoundMw);
 app.use(errorsMw);

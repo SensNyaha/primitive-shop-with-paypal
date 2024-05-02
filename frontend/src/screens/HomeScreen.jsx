@@ -7,7 +7,6 @@ import Product from "../components/Product";
 import SpinnerWrapper from "../components/SpinnerWrapper";
 import { getProductsIDs } from "../redux/slices/productsSlice";
 import Message from "../components/Message";
-import { fetchLogin } from "../redux/slices/authSlice";
 
 function HomeScreen() {
     const { productIDs, loadingIDs, error } = useSelector(
@@ -26,19 +25,6 @@ function HomeScreen() {
         dispatch(getProductsIDs());
         setFetchedOnce(true);
     }, [dispatch]);
-
-    // useEffect(() => {
-    //     setTimeout(
-    //         () =>
-    //             dispatch(
-    //                 fetchLogin({
-    //                     email: "mihanmakarov@mail.ru",
-    //                     password: "Zoom98",
-    //                 })
-    //             ),
-    //         10000
-    //     );
-    // }, [dispatch]);
 
     return (
         <>
