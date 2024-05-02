@@ -29,8 +29,8 @@ function Header() {
                                     &nbsp;Cart
                                 </Nav.Link>
                             </LinkContainer>
-                            <LinkContainer to="/sign-in">
-                                <Nav.Link href="/sign-in" className="ms-auto">
+                            <LinkContainer to="/login">
+                                <Nav.Link href="/login" className="ms-auto">
                                     <i className="fas fa-user" />
                                     &nbsp;Sign In
                                 </Nav.Link>

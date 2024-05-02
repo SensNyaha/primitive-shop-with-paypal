@@ -37,17 +37,21 @@ fetchLogin = createAsyncThunk(
     async ({ email, password }, { dispatch }) => {
         dispatch(authSlice.actions.loginUserRequest());
 
-        const { data } = await axios.post("/api/users/login", {
-            email,
-            password,
-        });
-
-        console.log(data);
+        const { data } = await axios
+            .post("/api/users/login", {
+                email,
+                password,
+            })
+            .catch((e) => {
+                dispatch(
+                    authSlice.actions.loginUserFail(e?.response?.data?.message)
+                );
+            });
 
         if (data) {
             dispatch(authSlice.actions.loginUserSuccess(data));
             localStorage.setItem("userInfo", JSON.stringify(data));
-        } else dispatch(authSlice.actions.loginUserFail(data.message));
+        }
     }
 );
 

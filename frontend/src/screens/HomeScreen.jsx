@@ -27,18 +27,18 @@ function HomeScreen() {
         setFetchedOnce(true);
     }, [dispatch]);
 
-    useEffect(() => {
-        setTimeout(
-            () =>
-                dispatch(
-                    fetchLogin({
-                        email: "mihanmakarov@mail.ru",
-                        password: "Zoom98",
-                    })
-                ),
-            10000
-        );
-    }, [dispatch]);
+    // useEffect(() => {
+    //     setTimeout(
+    //         () =>
+    //             dispatch(
+    //                 fetchLogin({
+    //                     email: "mihanmakarov@mail.ru",
+    //                     password: "Zoom98",
+    //                 })
+    //             ),
+    //         10000
+    //     );
+    // }, [dispatch]);
 
     return (
         <>

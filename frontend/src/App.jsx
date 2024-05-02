@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { changeProductQuantity } from "./redux/slices/cartSlice";
 import CartScreen from "./screens/CartScreen";
 import { loginUserSuccess } from "./redux/slices/authSlice";
+import LoginScreen from "./screens/LoginScreen";
 
 function App() {
     const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
                             element={<ProductScreen />}
                         />
                         <Route path="/cart" element={<CartScreen />} />
+                        <Route path="/login" element={<LoginScreen />} />
                     </Routes>
                 </Container>
             </main>

@@ -6,7 +6,6 @@ import generateJSONtoken from "../utils/generateJSONtoken.js";
 export const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     const foundUser = await User.findOne({ email });
-
     if (!foundUser)
         return res.status(404).json({
             success: false,
