@@ -1,31 +1,33 @@
 import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
 
-export const changeProductQuantity = asyncHandler(async (req, res) => {
+export const setCartContent = asyncHandler(async (req, res) => {
     const translatedUser = req?.user;
     const items = req.body.items;
 
     const foundUser = await User.findById(translatedUser._id);
 
     if (foundUser) {
-        items.forEach((item) => {
-            if (item.quantity === 0) {
-                foundUser.cart = foundUser.cart.filter(
-                    (cartElem) => cartElem.id !== item.id
-                );
-            } else {
-                const mergedItem = foundUser.cart.find((cartElem) => {
-                    return cartElem._id === item._id;
-                });
+        // items.forEach((item) => {
+        //     if (item.quantity === 0) {
+        //         foundUser.cart = foundUser.cart.filter(
+        //             (cartElem) => cartElem.id !== item.id
+        //         );
+        //     } else {
+        //         const mergedItem = foundUser.cart.find((cartElem) => {
+        //             return cartElem._id === item._id;
+        //         });
 
-                if (mergedItem) mergedItem.quantity = item.quantity;
-                else foundUser.cart = [...foundUser.cart, item];
-            }
-        });
+        //         if (mergedItem) mergedItem.quantity = item.quantity;
+        //         else foundUser.cart = [...foundUser.cart, item];
+        //     }
+        // });
 
-        if (items.length === 0) {
-            foundUser.cart = [];
-        }
+        // if (items.length === 0) {
+        //     foundUser.cart = [];
+        // }
+        foundUser.cart = items;
+
         foundUser.save();
 
         res.json(foundUser);

@@ -12,10 +12,18 @@ export const cartSlice = createSlice({
                     const foundIndex = state.findIndex(
                         (e) => e._id === plElem._id
                     );
-                    if (foundIndex !== -1)
-                        state[foundIndex].quantity = plElem.quantity;
-                    else state.push(plElem);
+                    if (foundIndex !== -1) {
+                        state[foundIndex] = plElem;
+
+                        state.splice(foundIndex, 1);
+                    }
+                    state.push(plElem);
                 }
+                if (plElem.quantity === 0)
+                    state.splice(
+                        state.findIndex((e) => e._id === plElem._id),
+                        1
+                    );
             });
 
             localStorage.setItem("cart", JSON.stringify(state));

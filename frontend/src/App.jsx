@@ -34,14 +34,14 @@ function App() {
     useEffect(() => {
         if (userInfo) {
             axios.post(
-                "/api/cart/set-new-item",
+                "/api/cart/set-cart",
                 { items: cart },
                 {
                     headers: { Authorization: `Bearer ${userInfo.token}` },
                 }
             );
         }
-    }, [cart, userInfo]);
+    }, [cart]);
 
     useEffect(() => {
         if (userInfo && userInfo.cart) {
@@ -54,17 +54,18 @@ function App() {
                     );
 
                     if (merge) merge.quantity = cartProduct.quantity;
+                    else tempCart.push(cartProduct);
                 });
             }
 
-            dispatch(changeProductQuantity(JSON.parse(tempCart)));
-            axios.post(
-                "/api/cart/set-new-item",
-                { items: tempCart },
-                {
-                    headers: { Authorization: `Bearer ${userInfo.token}` },
-                }
-            );
+            dispatch(changeProductQuantity(tempCart));
+            // axios.post(
+            //     "/api/cart/set-new-item",
+            //     { items: tempCart },
+            //     {
+            //         headers: { Authorization: `Bearer ${userInfo.token}` },
+            //     }
+            // );
         }
     }, [userInfo]);
 

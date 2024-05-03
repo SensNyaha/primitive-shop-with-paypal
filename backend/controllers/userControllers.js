@@ -25,13 +25,14 @@ export const authUser = asyncHandler(async (req, res) => {
         });
 
     {
-        const { _id, email, name, isAdmin } = foundUser;
+        const { _id, email, name, isAdmin, cart } = foundUser;
 
         return res.json({
             _id,
             email,
             name,
             isAdmin,
+            cart,
             token: generateJSONtoken(_id),
         });
     }
@@ -73,13 +74,14 @@ export const registerUser = asyncHandler(async (req, res) => {
     try {
         const newUser = await new User({ name, email, password }).save();
         {
-            const { _id, email, name, isAdmin } = newUser;
+            const { _id, email, name, isAdmin, cart } = newUser;
             if (newUser) {
                 return res.status(201).json({
                     _id,
                     email,
                     name,
                     isAdmin,
+                    cart,
                     token: generateJSONtoken(_id),
                 });
             }
