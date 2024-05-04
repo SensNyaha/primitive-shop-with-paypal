@@ -52,6 +52,38 @@ export const getUserProfile = asyncHandler(async (req, res) => {
     }
 });
 
+export const updateUserProfile = asyncHandler(async (req, res) => {
+    const translatedUser = req?.user;
+
+    const { email, name, password } = req.body;
+
+    const foundUser = User.findById(translatedUser._id);
+
+    if (foundUser) {
+        foundUser.email = email || foundUser.email;
+        foundUser.name = name || foundUser.name;
+
+        password ? (foundUser.password = password) : null;
+
+        const { _id, email, name, isAdmin, cart } = await foundUser.save();
+
+        return res.json({
+            _id,
+            email,
+            name,
+            isAdmin,
+            cart,
+            token: generateJSONtoken(_id),
+        });
+    } else {
+        res.status(404).json({
+            success: false,
+            code: 404,
+            message: "Bad authentifuication result or Server error",
+        });
+    }
+});
+
 export const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
 
